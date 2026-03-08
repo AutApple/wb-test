@@ -4,8 +4,7 @@ export class TestJob extends BaseJob {
     constructor (private message: string) {
         super();
     }
-    public execute(): void {
+    public async execute(): Promise<void> {
         console.log(`Test job is working. Message: ${this.message}`);
     }
-
 }
