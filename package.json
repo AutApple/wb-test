@@ -1,0 +1,24 @@
+{
+  "name": "wb-test",
+  "version": "1.0.0",
+  "description": "тестовое задание",
+  "homepage": "https://github.com/AutApple/wb-test#readme",
+  "bugs": {
+    "url": "https://github.com/AutApple/wb-test/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AutApple/wb-test.git"
+  },
+  "license": "ISC",
+  "author": "autapple",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "tsc & node dist/index.js"
+  },
+  "devDependencies": {
+    "@types/node": "^25.3.5",
+    "typescript": "^5.9.3"
+  }
+}
