@@ -48,6 +48,9 @@ GOOGLE_SERVICE_ACCOUNT_EMAIL=example@example.iam.gserviceaccount.com # Email с�
 GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----... #  Приватный ключ (см. Конфигурация Google таблиц)
 ```
 
+> [!NOTE]
+> Убедитесь что `.env` файл добавлен в `.gitignore` и не попадает в репозиторий.
+
 ## Общая конфигурация приложения
 Общая конфигурация приложения находится в src/config/app.config.ts
 
