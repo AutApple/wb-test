@@ -4,6 +4,7 @@ import envConfig from './config/env.config.js';
 import db from './db/db.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 import { TestJob } from './test.job.js';
+import { getDay } from './utils/date.utils.js';
 
 // const scheduler = new SchedulerService();
 
@@ -18,13 +19,8 @@ import { TestJob } from './test.job.js';
 async function fetchAndUpsertTarrifsToday() {
     const boxTarrifService = new BoxTarrifsService();
     const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
-
-    const now = Date.now();
-    const date = new Date(now);
-    const day = date.toISOString().split('T')[0];
-
     const tarrifs = await boxTarrifService.fetchToday();
-    await boxTarrifDbService.upsertTarrif(tarrifs, day);
+    await boxTarrifDbService.upsertTarrif(tarrifs, getDay());
     console.log('Success');
 }
 

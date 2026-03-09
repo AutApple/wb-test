@@ -1,18 +1,14 @@
 import z from 'zod';
 import envConfig from '../config/env.config.js';
 import { BoxTarrifDTO, BoxTarrifType } from './dto/box-tarrif.dto.js';
+import { getDay } from '../utils/date.utils.js';
 
 export class BoxTarrifsService {
     constructor () {}
         
-    private getDay(): string {
-        const now = Date.now();
-        const date = new Date(now);
-        return date.toISOString().split('T')[0];
-    }
 
     public async fetchToday(): Promise<BoxTarrifType> {
-        const response = await fetch(`https://common-api.wildberries.ru/api/v1/tariffs/box?date=${this.getDay()}`, {
+        const response = await fetch(`https://common-api.wildberries.ru/api/v1/tariffs/box?date=${getDay()}`, {
             headers: {
                 'Authorization': `${envConfig.WB_API_KEY}`
             }
