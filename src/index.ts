@@ -3,6 +3,8 @@ import { BoxTarrifsApiService } from './box-tarrifs/box-tarrifs-api.service.js';
 import db from './db/db.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 import { getDay } from './utils/date.utils.js';
+import { BoxTarrifsSheetsService } from './box-tarrifs/box-tarrifs-sheets.service.js';
+import { appConfiguration } from './config/server.config.js';
 
 // const scheduler = new SchedulerService();
 
@@ -13,13 +15,20 @@ import { getDay } from './utils/date.utils.js';
 // scheduler.addJob('test1', testJob, 2000);
 // scheduler.addJob('test2', testJob2, 5000);
 
+// async function fetchAndUpsertTarrifsToday() {
+//     const boxTarrifService = new BoxTarrifsApiService();
+//     const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
+//     const tarrifs = await boxTarrifService.fetchToday();
+//     await boxTarrifDbService.upsertTarrif(tarrifs, getDay());
+//     console.log('Success');
+// }
 
-async function fetchAndUpsertTarrifsToday() {
-    const boxTarrifService = new BoxTarrifsApiService();
+// fetchAndUpsertTarrifsToday();
+
+async function test() {
     const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
-    const tarrifs = await boxTarrifService.fetchToday();
-    await boxTarrifDbService.upsertTarrif(tarrifs, getDay());
-    console.log('Success');
-}
+    const boxTarrifSheetService = new BoxTarrifsSheetsService(boxTarrifDbService);
 
-fetchAndUpsertTarrifsToday();
+    await boxTarrifSheetService.initializeSpreadsheets(appConfiguration.sheetIds);
+}
+test();
