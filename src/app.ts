@@ -3,11 +3,11 @@ import { appConfiguration } from './config/server.config.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 
 export class WbTestApplication {
-    private scheduler = new SchedulerService();
+    private tarrifUpdateScheduler = new SchedulerService();
     constructor () {}
 
     public run() {
         const tarrifUpdateJob = new TarrifsSequentialUpdateJob();
-        this.scheduler.addJob('updateTarrifs', tarrifUpdateJob, appConfiguration.intervalMin * 60 * 1000);    
+        this.tarrifUpdateScheduler.start(tarrifUpdateJob, appConfiguration.intervalMin * 60 * 1000);    
     }
 }
