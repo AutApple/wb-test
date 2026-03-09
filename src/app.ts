@@ -1,5 +1,5 @@
 import { TarrifsSequentialUpdateJob } from './box-tarrifs/jobs/tarrifs-sequential-update.job.js';
-import { appConfiguration } from './config/server.config.js';
+import { appConfiguration } from './config/app.config.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 
 export class WbTestApplication {

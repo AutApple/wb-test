@@ -1,4 +1,4 @@
-import { appConfiguration } from '../../config/server.config.js';
+import { appConfiguration } from '../../config/app.config.js';
 import db from '../../db/db.js';
 import { BaseJob } from '../../scheduler/base.job.js';
 import { getToday } from '../../utils/date.utils.js';
