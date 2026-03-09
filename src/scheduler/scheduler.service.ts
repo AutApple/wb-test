@@ -3,15 +3,8 @@ import { BaseJob } from './base.job.js';
 
 export class SchedulerService {
     private running = false;
-    private logger = pino({
-        transport: {
-            target: 'pino-pretty',
-            options: {
-                colorize: true
-            }
-        }
-    });
 
+    constructor (private logger: pino.Logger) {}
     public async start(job: BaseJob, intervalMs: number): Promise<void> {
         if (this.running) throw new Error("Scheduler already running");
         this.running = true;
@@ -21,11 +14,15 @@ export class SchedulerService {
                 await job.execute();
                 this.logger.info("Job executed successfully");
             } catch (err) {
-                this.logger.error("Job failed to execute");
+                this.logger.error({err}, "Job failed to execute");
             }
 
             await new Promise(resolve => setTimeout(resolve, intervalMs));
         }
+    }
+    
+    public isRunning(): boolean {
+        return this.running;
     }
 
     public stop(): void {
