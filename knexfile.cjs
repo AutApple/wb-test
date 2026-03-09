@@ -2,7 +2,6 @@ require('dotenv').config();
 
 /** @type {import('knex').Knex.Config} */
 module.exports = {
-    
         client: 'pg',
         connection: {
             host:     process.env.POSTGRES_HOST,
