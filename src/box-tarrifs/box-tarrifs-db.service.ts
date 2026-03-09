@@ -6,7 +6,7 @@ export class BoxTarrifsDatabaseService {
     constructor(private dbClient: Knex) {}
     
     private parseDecimal(val: string): number {
-        return parseFloat(val.replace(',', '.'));
+        return parseFloat(val.replace(',', '.').replace('-', '0'));
     }
 
     private emptyStringToNull(val: string): string | null {
