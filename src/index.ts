@@ -1,9 +1,7 @@
 import { BoxTarrifsDatabaseService } from './box-tarrifs/box-tarrifs-db.service.js';
-import { BoxTarrifsService } from './box-tarrifs/box-tarrifs.service.js';
-import envConfig from './config/env.config.js';
+import { BoxTarrifsApiService } from './box-tarrifs/box-tarrifs-api.service.js';
 import db from './db/db.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
-import { TestJob } from './test.job.js';
 import { getDay } from './utils/date.utils.js';
 
 // const scheduler = new SchedulerService();
@@ -17,7 +15,7 @@ import { getDay } from './utils/date.utils.js';
 
 
 async function fetchAndUpsertTarrifsToday() {
-    const boxTarrifService = new BoxTarrifsService();
+    const boxTarrifService = new BoxTarrifsApiService();
     const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
     const tarrifs = await boxTarrifService.fetchToday();
     await boxTarrifDbService.upsertTarrif(tarrifs, getDay());

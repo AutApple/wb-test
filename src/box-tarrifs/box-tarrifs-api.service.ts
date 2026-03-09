@@ -3,7 +3,7 @@ import envConfig from '../config/env.config.js';
 import { BoxTarrifDTO, BoxTarrifType } from './dto/box-tarrif.dto.js';
 import { getDay } from '../utils/date.utils.js';
 
-export class BoxTarrifsService {
+export class BoxTarrifsApiService {
     constructor () {}
         
 
