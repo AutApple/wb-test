@@ -25,8 +25,8 @@
 12. В Permissions нажмите на Select a role и во вкладке Basic выберите Owner, затем нажмите Continue и Done
 13. В меню управления сервисными аккаунтами во вкладке Actions нажмите на три круга и выберите Manage keys
 14. Нажмите Add key и выберите JSON, нажмите Create
-15. В скачанном файле скопируйте client_email и вставьте его в поле GOOGLE_SERVICE_ACCOUNT_EMAIL в .env файле
-16. Также скопируйте private_key и вставьте его в поле GOOGLE_PRIVATE_KEY
+15. В скачанном файле скопируйте значение client_email и вставьте его в поле GOOGLE_SERVICE_ACCOUNT_EMAIL в .env файле
+16. Также скопируйте значение private_key и вставьте его в поле GOOGLE_PRIVATE_KEY
 ### Создание таблиц
 1. Создайте google таблицу либо перейдите на имеющуюся таблицу, нажмите на Share в правом верхнем углу
 2. В поле Add people введите email из поля client_email в скачанном файле, нажмите Send
