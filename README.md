@@ -1,5 +1,9 @@
 # Тестовое задание
 > Сервис, регулярно получающий данные о тарифах на коробы и синхронизирующий это с БД и Google таблицами 
+## Требования к запуску
+- Docker & Docker Compose
+- Google Cloud аккаунт
+- API ключ Wildberries
 ## Конфигурация Google таблиц
 Перед сборкой необходима конфигурация Google API. 
 ### Создание сервисного аккаунта и получение ключа
@@ -29,6 +33,20 @@
 
 ## Конфигурация .env переменных
 Создайте .env файл и заполните его в соответствии с шаблоном .env.example. Для работы приложения требуется API ключ Wildberries. 
+
+```env
+NODE_ENV=DEV # Среда (DEV или PROD)
+POSTGRES_HOST=db # Название хоста БД (по умолчанию db, так как так называется сервис в докере)
+POSTGRES_USER=postgres # Имя пользователя БД
+POSTGRES_PASSWORD=postgres # Пароль БД
+POSTGRES_PORT=5432 # Порт БД
+POSTGRES_DB=testdb # Название БД
+
+WB_API_KEY=enterapikey # Апи ключ wildberries
+
+GOOGLE_SERVICE_ACCOUNT_EMAIL=example@example.iam.gserviceaccount.com # Email сервисного аккаунта гугл (см. выше)
+GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----... #  Приватный ключ (см. выше)
+```
 
 ## Общая конфигурация приложения
 Общая конфигурация приложения находится в src/config/app.config.ts
