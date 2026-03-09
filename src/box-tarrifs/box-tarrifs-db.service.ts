@@ -8,6 +8,9 @@ export class BoxTarrifsDatabaseService {
     private parseDecimal(val: string): number {
         return parseFloat(val.replace(',', '.'));
     }
+    private emptyStringToNull(val: string): string | null {
+        return val && val.trim() !== '' ? val : null;
+    }
 
     public async upsertTarrif(tarrif: BoxTarrifType, date: string): Promise<void> {
         await Promise.all(
@@ -26,8 +29,10 @@ export class BoxTarrifsDatabaseService {
                         box_storage_base:                    this.parseDecimal(warehouse.boxStorageBase),
                         box_storage_liter:                   this.parseDecimal(warehouse.boxStorageLiter),
                         box_storage_coef_expr:               this.parseDecimal(warehouse.boxStorageCoefExpr),
-                        dt_next_box:                         tarrif.dtNextBox,
-                        dt_till_max:                         tarrif.dtTillMax,
+                        
+                        dt_next_box:                         this.emptyStringToNull(tarrif.dtNextBox),
+                        dt_till_max:                         this.emptyStringToNull(tarrif.dtTillMax),
+                        
                         updated_at:                          this.dbClient.fn.now(),
                     })
                     .onConflict(['date', 'warehouse_name'])

@@ -1,5 +1,7 @@
+import { BoxTarrifsDatabaseService } from './box-tarrifs/box-tarrifs-db.service.js';
 import { BoxTarrifsService } from './box-tarrifs/box-tarrifs.service.js';
 import envConfig from './config/env.config.js';
+import db from './db/db.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 import { TestJob } from './test.job.js';
 
@@ -13,10 +15,17 @@ import { TestJob } from './test.job.js';
 // scheduler.addJob('test2', testJob2, 5000);
 
 
-async function fetchTarrifsToday() {
-    const service = new BoxTarrifsService();
-    const tarrifs = await service.fetchToday();
-    console.log(tarrifs);
+async function fetchAndUpsertTarrifsToday() {
+    const boxTarrifService = new BoxTarrifsService();
+    const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
+
+    const now = Date.now();
+    const date = new Date(now);
+    const day = date.toISOString().split('T')[0];
+
+    const tarrifs = await boxTarrifService.fetchToday();
+    await boxTarrifDbService.upsertTarrif(tarrifs, day);
+    console.log('Success');
 }
 
-// fetchTarrifsToday();
+fetchAndUpsertTarrifsToday();
