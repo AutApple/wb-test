@@ -1,5 +1,9 @@
 # Тестовое задание
-> Сервис, регулярно получающий данные о тарифах на коробы и синхронизирующий это с БД и Google таблицами 
+Сервис для автоматической синхронизации тарифов на коробы Wildberries. 
+Регулярно получает данные через Wildberries API, сохраняет их в PostgreSQL 
+и обновляет указанные Google таблицы по расписанию.
+
+**Стек:** Node.js, TypeScript, PostgreSQL, Knex, Google Sheets API, Docker
 ## Требования к запуску
 - Docker & Docker Compose
 - Google Cloud аккаунт
