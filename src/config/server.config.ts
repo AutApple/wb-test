@@ -1,6 +1,7 @@
 export interface WBTestConfiguration {
     intervalMin: number,
-    sheetIds: string[] 
+    sheetIds: string[],
+    tabName: string
 }
 
 // singleton config
@@ -9,4 +10,5 @@ export const appConfiguration: WBTestConfiguration = {
     sheetIds: [ // Google spreadsheet ids
         '1sytYVJrki8-yt3AjoGLxKvbvmrdvFt1lHrqBPe7NNOE'
     ],
+    tabName: 'stocks_coefs'
 };

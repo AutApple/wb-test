@@ -1,5 +1,5 @@
 import { Knex } from 'knex';
-import { BoxTarrifType } from './dto/box-tarrif.dto.js';
+import { BoxTarrifDTO, BoxTarrifType } from './dto/box-tarrif.dto.js';
 
 
 export class BoxTarrifsDatabaseService {
@@ -8,8 +8,35 @@ export class BoxTarrifsDatabaseService {
     private parseDecimal(val: string): number {
         return parseFloat(val.replace(',', '.'));
     }
+
     private emptyStringToNull(val: string): string | null {
         return val && val.trim() !== '' ? val : null;
+    }
+
+    public async getTarrif(date: string): Promise<BoxTarrifType> {
+        const rows = await this.dbClient('tariffs_box').where({ date });
+
+        if (rows.length === 0) {
+            throw new Error(`No tariff found for date: ${date}`);
+        }
+
+        return BoxTarrifDTO.parse({
+            dtNextBox: String(rows[0].dt_next_box) ?? '',
+            dtTillMax: String(rows[0].dt_till_max) ?? '',
+            warehouseList: rows.map((row) => ({
+                warehouseName:                      row.warehouse_name,
+                geoName:                            row.geo_name,
+                boxDeliveryBase:                    String(row.box_delivery_base),
+                boxDeliveryLiter:                   String(row.box_delivery_liter),
+                boxDeliveryCoefExpr:                String(row.box_delivery_coef_expr),
+                boxDeliveryMarketplaceBase:         String(row.box_delivery_marketplace_base),
+                boxDeliveryMarketplaceLiter:        String(row.box_delivery_marketplace_liter),
+                boxDeliveryMarketplaceCoefExpr:     String(row.box_delivery_marketplace_coef_expr),
+                boxStorageBase:                     String(row.box_storage_base),
+                boxStorageLiter:                    String(row.box_storage_liter),
+                boxStorageCoefExpr:                 String(row.box_storage_coef_expr),
+            })),
+        });
     }
 
     public async upsertTarrif(tarrif: BoxTarrifType, date: string): Promise<void> {
