@@ -22,6 +22,7 @@ export class SchedulerService {
         if (this.jobMap.has(id)) throw new Error(`Job with id ${id} already exists`);
         const timeout = setTimeout(() => this.runJob(id, job, intervalMs), intervalMs);
         this.jobMap.set(id, timeout);
+        job.execute(); // first execution
     }
 
 
