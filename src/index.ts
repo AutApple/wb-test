@@ -18,8 +18,19 @@ import { appConfiguration } from './config/server.config.js';
 async function fetchAndUpsertTarrifsToday() {
     const boxTarrifService = new BoxTarrifsApiService();
     const boxTarrifDbService = new BoxTarrifsDatabaseService(db);
+    const boxTarrifSheetService = new BoxTarrifsSheetsService(
+        boxTarrifDbService, { 
+             tabName: appConfiguration.tabName,
+             parallelLimit: 10
+         }
+    );
+    
+    
     const tarrifs = await boxTarrifService.fetchToday();
     await boxTarrifDbService.upsertTarrif(tarrifs, getToday());
+    await boxTarrifSheetService.initializeSpreadsheets(appConfiguration.sheetIds);
+    await boxTarrifSheetService.syncSpreadsheetsWithDb();
+    
     console.log('Success');
 }
 
