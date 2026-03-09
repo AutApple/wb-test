@@ -9,11 +9,11 @@ module.exports = {
             port:     Number(process.env.POSTGRES_PORT) || 5432,
             user:     process.env.POSTGRES_USER,
             password: process.env.POSTGRES_PASSWORD,
-            database: process.env.POSTGRES_DATABASE,
+            database: process.env.POSTGRES_DB,
         },
         migrations: {
             directory: './src/db/migrations',
-            extension: 'ts',
+            extension: 'cjs',
         },
         seeds: {
             directory: './src/db/seeds',

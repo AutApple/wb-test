@@ -8,7 +8,7 @@ const db: Knex = knex({
         port: envConfig.POSTGRES_PORT || 5432,
         user: envConfig.POSTGRES_USER,
         password: envConfig.POSTGRES_PASSWORD,
-        database: envConfig.POSTGRES_DATABASE,
+        database: envConfig.POSTGRES_DB,
     },
     pool: { min: 2, max: 10 },
 });

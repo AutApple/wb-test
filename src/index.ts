@@ -19,4 +19,4 @@ async function fetchTarrifsToday() {
     console.log(tarrifs);
 }
 
-fetchTarrifsToday();
+// fetchTarrifsToday();

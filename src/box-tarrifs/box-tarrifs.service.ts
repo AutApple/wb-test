@@ -1,6 +1,6 @@
 import z from 'zod';
 import envConfig from '../config/env.config.js';
-import { OutputTarrifDTO, OutputTarrifDTOType } from './dto/output-tarrif.dto.js';
+import { BoxTarrifDTO, BoxTarrifType } from './dto/box-tarrif.dto.js';
 
 export class BoxTarrifsService {
     constructor () {}
@@ -11,7 +11,7 @@ export class BoxTarrifsService {
         return date.toISOString().split('T')[0];
     }
 
-    public async fetchToday(): Promise<OutputTarrifDTOType> {
+    public async fetchToday(): Promise<BoxTarrifType> {
         const response = await fetch(`https://common-api.wildberries.ru/api/v1/tariffs/box?date=${this.getDay()}`, {
             headers: {
                 'Authorization': `${envConfig.WB_API_KEY}`
@@ -25,7 +25,7 @@ export class BoxTarrifsService {
 
         const responseJson = await response.json();
  
-        const parsedTarrif = OutputTarrifDTO.safeParse(responseJson.response?.data);
+        const parsedTarrif = BoxTarrifDTO.safeParse(responseJson.response?.data);
         
         if (!parsedTarrif.success) {
             const err = z.treeifyError(parsedTarrif.error).errors;

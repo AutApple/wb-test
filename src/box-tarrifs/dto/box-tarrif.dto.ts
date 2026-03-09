@@ -1,6 +1,6 @@
 import z from 'zod';
 // using zod to validate output and make everything type safe
-export const OutputTarrifDTO = z.object({
+export const BoxTarrifDTO = z.object({
     dtNextBox: z.string(),
     dtTillMax: z.string(),
     warehouseList: z.array(
@@ -20,4 +20,4 @@ export const OutputTarrifDTO = z.object({
     )
 });
 
-export type OutputTarrifDTOType = z.infer<typeof OutputTarrifDTO>;
+export type BoxTarrifType = z.infer<typeof BoxTarrifDTO>;

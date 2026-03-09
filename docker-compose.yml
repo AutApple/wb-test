@@ -6,7 +6,8 @@ services:
     env_file:
       - .env
     depends_on:
-      - db
+      db:
+        condition: service_healthy
 
   db:
     image: postgres:16-alpine
@@ -14,6 +15,11 @@ services:
       - .env
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d testdb"]
+      interval: 3s
+      timeout: 5s
+      retries: 10
 
 volumes:
   postgres_data:
