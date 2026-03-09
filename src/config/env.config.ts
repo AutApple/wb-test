@@ -13,14 +13,17 @@ const ZodEnvSchema =  z.object({
     POSTGRES_PORT: z.coerce.number().default(5432),
     POSTGRES_DB: z.string(),
 
-    WB_API_KEY: z.string()
+    WB_API_KEY: z.string(),
+
+    GOOGLE_SERVICE_ACCOUNT_EMAIL: z.string(),
+    GOOGLE_PRIVATE_KEY: z.string()
 });
 
 const result = ZodEnvSchema.safeParse(process.env);
 
 if (!result.success) {
     console.error('Invalid environment variables:');
-    console.error(result.error);
+    console.error(z.flattenError(result.error));
     process.exit(1);
 }
 
