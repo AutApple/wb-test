@@ -24,13 +24,16 @@ export class TarrifsSequentialUpdateJob extends BaseJob{
         this.tarrifsSheetsService = new BoxTarrifsSheetsService(this.tarrifsDbService, {
             parallelLimit: appConfiguration.parallelChunkSizeLimit,
             tabName: appConfiguration.tabName
-        });
+        });    
+    }
+
+    public async init() {
+        await this.tarrifsSheetsService.initializeSpreadsheets(appConfiguration.sheetIds);
     }
 
     public async execute(): Promise<void> {
            const tarrifs = await this.tarrifsApiService.fetchToday();
-           await this.tarrifsDbService.upsertTarrif(tarrifs, getToday());
-           await this.tarrifsSheetsService.initializeSpreadsheets(appConfiguration.sheetIds);
+           await this.tarrifsDbService.upsertTarrif(tarrifs, getToday());       
            await this.tarrifsSheetsService.syncSpreadsheetsWithDb();
     }
 }

@@ -13,11 +13,12 @@ export class WbTestApplication {
         }
     });
     private tarrifUpdateScheduler = new SchedulerService(this.logger);
-    
+
     constructor () {}
 
-    public run() {
+    public async run() {
         const tarrifUpdateJob = new TarrifsSequentialUpdateJob();
+        await tarrifUpdateJob.init();
         this.tarrifUpdateScheduler.start(tarrifUpdateJob, appConfiguration.intervalMin * 60 * 1000);    
     }
 }
