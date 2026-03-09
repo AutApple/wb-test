@@ -1,5 +1,5 @@
 import knex, { Knex } from 'knex';
-import envConfig from './config/env.config.js';
+import envConfig from '../config/env.config.js';
 
 const db: Knex = knex({
     client: 'pg',

@@ -12,6 +12,8 @@ const ZodEnvSchema =  z.object({
     POSTGRES_PASSWORD: z.string().default('postgres'),
     POSTGRES_PORT: z.coerce.number().default(5432),
     POSTGRES_DATABASE: z.string(),
+
+    WB_API_KEY: z.string()
 });
 
 const result = ZodEnvSchema.safeParse(process.env);
