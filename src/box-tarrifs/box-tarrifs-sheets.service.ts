@@ -34,14 +34,10 @@ export class BoxTarrifsSheetsService {
                     const doc = new GoogleSpreadsheet(id, this.auth);
                     await doc.loadInfo();
                     this.spreadsheets.push(doc);
-                    console.log(doc.title);
                 }))
         );
     }
 
-    // This method can be used if syncing is run as a separate job. 
-    // but for the provided task its irrelevant cause it results in N+1 db queries
-    // so i use just syncSpreadsheetsWithData in a single job 
     public async syncSpreadsheetsWithDb(): Promise<void> {
         const relevantTarrifs = await this.dbService.getTarrif(getToday());
         await this.syncSpreadsheetsWithData(relevantTarrifs, getToday());
