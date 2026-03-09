@@ -16,7 +16,7 @@ export class BoxTariffsDatabaseService {
 		return mapRowsToBoxTarrif(rows);
 	}
 
-	public async upsertTarrif(tarrif: BoxTariffType, date: string): Promise<void> {
+	public async upsertTariff(tarrif: BoxTariffType, date: string): Promise<void> {
 		await Promise.all(
 			tarrif.warehouseList.map((warehouse) =>
 				this.dbClient('tariffs_box')

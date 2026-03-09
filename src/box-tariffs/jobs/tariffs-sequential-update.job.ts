@@ -33,7 +33,7 @@ export class TarrifsSequentialUpdateJob extends BaseJob {
 
 	public async execute(): Promise<void> {
 		const tarrifs = await this.tarrifsApiService.fetchToday();
-		await this.tarrifsDbService.upsertTarrif(tarrifs, getToday());
+		await this.tarrifsDbService.upsertTariff(tarrifs, getToday());
 		await this.tarrifsSheetsService.syncSpreadsheetsWithDb();
 	}
 }
