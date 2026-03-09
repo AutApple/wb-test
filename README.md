@@ -44,8 +44,8 @@ POSTGRES_DB=testdb # Название БД
 
 WB_API_KEY=enterapikey # Апи ключ wildberries
 
-GOOGLE_SERVICE_ACCOUNT_EMAIL=example@example.iam.gserviceaccount.com # Email сервисного аккаунта гугл (см. выше)
-GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----... #  Приватный ключ (см. выше)
+GOOGLE_SERVICE_ACCOUNT_EMAIL=example@example.iam.gserviceaccount.com # Email сервисного аккаунта гугл (см. Конфигурация Google таблиц)
+GOOGLE_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----... #  Приватный ключ (см. Конфигурация Google таблиц)
 ```
 
 ## Общая конфигурация приложения
