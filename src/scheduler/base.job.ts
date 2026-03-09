@@ -1,4 +1,4 @@
 export abstract class BaseJob {
-    constructor() {}
-    public abstract execute(): Promise<void>; 
+	constructor() {}
+	public abstract execute(): Promise<void>;
 }

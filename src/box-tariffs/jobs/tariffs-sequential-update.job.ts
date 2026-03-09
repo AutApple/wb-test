@@ -8,32 +8,32 @@ import { BoxTariffsSheetsService } from '../box-tariffs-sheets.service.js';
 
 /**
  * Sequential tarrif update job.
- * 
+ *
  * This job orchestrates all of the services
- * 
+ *
  */
-export class TarrifsSequentialUpdateJob extends BaseJob{
-    private tarrifsDbService: BoxTariffsDatabaseService;
-    private tarrifsApiService: BoxTariffsApiService;
-    private tarrifsSheetsService: BoxTariffsSheetsService;
+export class TarrifsSequentialUpdateJob extends BaseJob {
+	private tarrifsDbService: BoxTariffsDatabaseService;
+	private tarrifsApiService: BoxTariffsApiService;
+	private tarrifsSheetsService: BoxTariffsSheetsService;
 
-    constructor() {
-        super();
-        this.tarrifsApiService = new BoxTariffsApiService();
-        this.tarrifsDbService = new BoxTariffsDatabaseService(db);
-        this.tarrifsSheetsService = new BoxTariffsSheetsService(this.tarrifsDbService, {
-            parallelLimit: appConfiguration.parallelChunkSizeLimit,
-            tabName: appConfiguration.tabName
-        });    
-    }
+	constructor() {
+		super();
+		this.tarrifsApiService = new BoxTariffsApiService();
+		this.tarrifsDbService = new BoxTariffsDatabaseService(db);
+		this.tarrifsSheetsService = new BoxTariffsSheetsService(this.tarrifsDbService, {
+			parallelLimit: appConfiguration.parallelChunkSizeLimit,
+			tabName: appConfiguration.tabName,
+		});
+	}
 
-    public async init() {
-        await this.tarrifsSheetsService.initializeSpreadsheets(appConfiguration.sheetIds);
-    }
+	public async init() {
+		await this.tarrifsSheetsService.initializeSpreadsheets(appConfiguration.sheetIds);
+	}
 
-    public async execute(): Promise<void> {
-           const tarrifs = await this.tarrifsApiService.fetchToday();
-           await this.tarrifsDbService.upsertTarrif(tarrifs, getToday());       
-           await this.tarrifsSheetsService.syncSpreadsheetsWithDb();
-    }
+	public async execute(): Promise<void> {
+		const tarrifs = await this.tarrifsApiService.fetchToday();
+		await this.tarrifsDbService.upsertTarrif(tarrifs, getToday());
+		await this.tarrifsSheetsService.syncSpreadsheetsWithDb();
+	}
 }
