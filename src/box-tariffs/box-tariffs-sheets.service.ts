@@ -43,7 +43,7 @@ export class BoxTariffsSheetsService {
 	}
 
 	public async syncSpreadsheetsWithDb(): Promise<void> {
-		const relevantTarrifs = await this.dbService.getTarrif(getToday());
+		const relevantTarrifs = await this.dbService.getTariff(getToday());
 		await this.syncSpreadsheetsWithData(relevantTarrifs, getToday());
 	}
 

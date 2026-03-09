@@ -1,12 +1,12 @@
 import { Knex } from 'knex';
-import { BoxTariffDTO, BoxTariffType } from './dto/box-tariff.dto.js';
+import { BoxTariffType } from './dto/box-tariff.dto.js';
 import { mapRowsToBoxTarrif } from './mappers/box-tariff.maper.js';
 import { emptyStringToNull, parseDecimal } from './utils/formatting.utils.js';
 
 export class BoxTariffsDatabaseService {
 	constructor(private dbClient: Knex) {}
 
-	public async getTarrif(date: string): Promise<BoxTariffType> {
+	public async getTariff(date: string): Promise<BoxTariffType> {
 		const rows = await this.dbClient('tariffs_box').where({ date });
 
 		if (rows.length === 0) {
