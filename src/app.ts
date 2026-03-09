@@ -1,5 +1,5 @@
 import pino from 'pino';
-import { TarrifsSequentialUpdateJob } from './box-tarrifs/jobs/tarrifs-sequential-update.job.js';
+import { TarrifsSequentialUpdateJob } from './box-tariffs/jobs/tariffs-sequential-update.job.js';
 import { appConfiguration } from './config/app.config.js';
 import { SchedulerService } from './scheduler/scheduler.service.js';
 
@@ -12,13 +12,13 @@ export class WbTestApplication {
             }
         }
     });
-    private tarrifUpdateScheduler = new SchedulerService(this.logger);
+    private tariffUpdateScheduler = new SchedulerService(this.logger);
 
     constructor () {}
 
     public async run() {
-        const tarrifUpdateJob = new TarrifsSequentialUpdateJob();
-        await tarrifUpdateJob.init();
-        this.tarrifUpdateScheduler.start(tarrifUpdateJob, appConfiguration.intervalMin * 60 * 1000);    
+        const tariffUpdateJob = new TarrifsSequentialUpdateJob();
+        await tariffUpdateJob.init();
+        this.tariffUpdateScheduler.start(tariffUpdateJob, appConfiguration.intervalMin * 60 * 1000);    
     }
 }

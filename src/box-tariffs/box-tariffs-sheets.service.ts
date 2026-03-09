@@ -1,10 +1,10 @@
-import { BoxTarrifsDatabaseService } from './box-tarrifs-db.service.js';
+import { BoxTariffsDatabaseService } from './box-tariffs-db.service.js';
 
 import { GoogleSpreadsheet } from 'google-spreadsheet';
 import { JWT } from 'google-auth-library';
 import envConfig from '../config/env.config.js';
 import pLimit from 'p-limit';
-import { BoxTarrifType } from './dto/box-tarrif.dto.js';
+import { BoxTariffType } from './dto/box-tariff.dto.js';
 import { getToday } from '../utils/date.utils.js';
 
 export interface BoxTarrifsSheetsServiceConfig {
@@ -12,11 +12,11 @@ export interface BoxTarrifsSheetsServiceConfig {
     parallelLimit: number;
 }
 
-export class BoxTarrifsSheetsService {
+export class BoxTariffsSheetsService {
     private readonly auth: JWT;
     private spreadsheets: GoogleSpreadsheet[] = [];
 
-    constructor(private dbService: BoxTarrifsDatabaseService, private config: BoxTarrifsSheetsServiceConfig) {
+    constructor(private dbService: BoxTariffsDatabaseService, private config: BoxTarrifsSheetsServiceConfig) {
         this.auth = new JWT({
             email: envConfig.GOOGLE_SERVICE_ACCOUNT_EMAIL,
             key: envConfig.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n'),
@@ -43,7 +43,7 @@ export class BoxTarrifsSheetsService {
         await this.syncSpreadsheetsWithData(relevantTarrifs, getToday());
     }
 
-    public async syncSpreadsheetsWithData(boxTarrif: BoxTarrifType, date: string): Promise<void> {
+    public async syncSpreadsheetsWithData(boxTarrif: BoxTariffType, date: string): Promise<void> {
         const sorted = [...boxTarrif.warehouseList].sort(
             (a, b) => parseFloat(a.boxDeliveryCoefExpr.replace(',', '.')) - parseFloat(b.boxDeliveryCoefExpr.replace(',', '.'))
         );

@@ -2,9 +2,9 @@ import { appConfiguration } from '../../config/app.config.js';
 import db from '../../db/db.js';
 import { BaseJob } from '../../scheduler/base.job.js';
 import { getToday } from '../../utils/date.utils.js';
-import { BoxTarrifsApiService } from '../box-tarrifs-api.service.js';
-import { BoxTarrifsDatabaseService } from '../box-tarrifs-db.service.js';
-import { BoxTarrifsSheetsService } from '../box-tarrifs-sheets.service.js';
+import { BoxTariffsApiService } from '../box-tariffs-api.service.js';
+import { BoxTariffsDatabaseService } from '../box-tariffs-db.service.js';
+import { BoxTariffsSheetsService } from '../box-tariffs-sheets.service.js';
 
 /**
  * Sequential tarrif update job.
@@ -13,15 +13,15 @@ import { BoxTarrifsSheetsService } from '../box-tarrifs-sheets.service.js';
  * 
  */
 export class TarrifsSequentialUpdateJob extends BaseJob{
-    private tarrifsDbService: BoxTarrifsDatabaseService;
-    private tarrifsApiService: BoxTarrifsApiService;
-    private tarrifsSheetsService: BoxTarrifsSheetsService;
+    private tarrifsDbService: BoxTariffsDatabaseService;
+    private tarrifsApiService: BoxTariffsApiService;
+    private tarrifsSheetsService: BoxTariffsSheetsService;
 
     constructor() {
         super();
-        this.tarrifsApiService = new BoxTarrifsApiService();
-        this.tarrifsDbService = new BoxTarrifsDatabaseService(db);
-        this.tarrifsSheetsService = new BoxTarrifsSheetsService(this.tarrifsDbService, {
+        this.tarrifsApiService = new BoxTariffsApiService();
+        this.tarrifsDbService = new BoxTariffsDatabaseService(db);
+        this.tarrifsSheetsService = new BoxTariffsSheetsService(this.tarrifsDbService, {
             parallelLimit: appConfiguration.parallelChunkSizeLimit,
             tabName: appConfiguration.tabName
         });    

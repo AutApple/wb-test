@@ -1,8 +1,8 @@
 import { Knex } from 'knex';
-import { BoxTarrifDTO, BoxTarrifType } from './dto/box-tarrif.dto.js';
+import { BoxTariffDTO, BoxTariffType } from './dto/box-tariff.dto.js';
 
 
-export class BoxTarrifsDatabaseService {
+export class BoxTariffsDatabaseService {
     constructor(private dbClient: Knex) { }
 
     private parseDecimal(val: string): number {
@@ -23,14 +23,14 @@ export class BoxTarrifsDatabaseService {
             })
     }
 
-    public async getTarrif(date: string): Promise<BoxTarrifType> {
+    public async getTarrif(date: string): Promise<BoxTariffType> {
         const rows = await this.dbClient('tariffs_box').where({ date });
 
         if (rows.length === 0) {
             throw new Error(`No tariff found for date: ${date}`);
         }
 
-        return BoxTarrifDTO.parse({
+        return BoxTariffDTO.parse({
             dtNextBox: String(rows[0].dt_next_box) ?? '',
             dtTillMax: this.dateToLocaleString(rows[0].dt_till_max) ?? '',
             warehouseList: rows.map((row) => ({
@@ -49,7 +49,7 @@ export class BoxTarrifsDatabaseService {
         });
     }
 
-    public async upsertTarrif(tarrif: BoxTarrifType, date: string): Promise<void> {
+    public async upsertTarrif(tarrif: BoxTariffType, date: string): Promise<void> {
         await Promise.all(
             tarrif.warehouseList.map((warehouse) =>
                 this.dbClient('tariffs_box')
