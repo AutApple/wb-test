@@ -1,8 +1,7 @@
 import dotenv from 'dotenv';
 import z from 'zod';
 
-if (process.env.NODE_ENV !== 'PROD')
-    dotenv.config();
+dotenv.config();
 
 // im using zod to parse dotenv variables
 const ZodEnvSchema =  z.object({
