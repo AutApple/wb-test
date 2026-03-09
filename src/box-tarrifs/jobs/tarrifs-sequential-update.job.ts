@@ -22,7 +22,7 @@ export class TarrifsSequentialUpdateJob extends BaseJob{
         this.tarrifsApiService = new BoxTarrifsApiService();
         this.tarrifsDbService = new BoxTarrifsDatabaseService(db);
         this.tarrifsSheetsService = new BoxTarrifsSheetsService(this.tarrifsDbService, {
-            parallelLimit: 10,
+            parallelLimit: appConfiguration.parallelChunkSizeLimit,
             tabName: appConfiguration.tabName
         });
     }
