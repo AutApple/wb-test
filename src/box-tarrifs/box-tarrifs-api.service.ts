@@ -5,7 +5,6 @@ import { getDay } from '../utils/date.utils.js';
 
 export class BoxTarrifsApiService {
     constructor () {}
-        
 
     public async fetchToday(): Promise<BoxTarrifType> {
         const response = await fetch(`https://common-api.wildberries.ru/api/v1/tariffs/box?date=${getDay()}`, {
