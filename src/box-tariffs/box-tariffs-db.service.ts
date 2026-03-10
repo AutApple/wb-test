@@ -1,6 +1,6 @@
 import { Knex } from 'knex';
 import { BoxTariffType } from './dto/box-tariff.dto.js';
-import { mapRowsToBoxTarrif } from './mappers/box-tariff.maper.js';
+import { mapRowsToBoxTarrif } from './mappers/rows-to-box-tariff.mapper.js';
 import { emptyStringToNull, parseDecimal } from './utils/formatting.utils.js';
 
 export class BoxTariffsDatabaseService {

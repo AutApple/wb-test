@@ -40,8 +40,8 @@ export function boxTariffToSheetData(
 		headersMap.boxDeliveryMarketplaceLiter,
 		headersMap.boxDeliveryMarketplaceCoefExpr,
 		headersMap.boxStorageBase,
-		headersMap.boxDeliveryLiter,
-		headersMap.boxDeliveryCoefExpr,
+		headersMap.boxStorageLiter,
+		headersMap.boxStorageCoefExpr,
 		headersMap.date,
 		headersMap.dtTillMax,
 	];
