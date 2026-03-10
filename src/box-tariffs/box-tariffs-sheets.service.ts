@@ -6,10 +6,15 @@ import envConfig from '../config/env.config.js';
 import pLimit from 'p-limit';
 import { BoxTariffType } from './dto/box-tariff.dto.js';
 import { getToday } from '../utils/date.utils.js';
+import {
+	boxTariffToSheetData,
+	SheetDataHeaders,
+} from './mappers/box-tariff-to-sheet-data.mapper.js';
 
 export interface BoxTarrifsSheetsServiceConfig {
 	tabName: string;
 	parallelLimit: number;
+	sheetHeaders: SheetDataHeaders;
 }
 
 export class BoxTariffsSheetsService {
@@ -47,44 +52,8 @@ export class BoxTariffsSheetsService {
 		await this.syncSpreadsheetsWithData(relevantTarrifs, getToday());
 	}
 
-	public async syncSpreadsheetsWithData(boxTarrif: BoxTariffType, date: string): Promise<void> {
-		const sorted = [...boxTarrif.warehouseList].sort(
-			(a, b) =>
-				parseFloat(a.boxDeliveryCoefExpr.replace(',', '.')) -
-				parseFloat(b.boxDeliveryCoefExpr.replace(',', '.')),
-		);
-
-		const headers = [
-			'Склад',
-			'Регион',
-			'Доставка база',
-			'Доставка литр',
-			'Коэф доставки',
-			'Доставка маркет база',
-			'Доставка маркет литр',
-			'Коэф доставки маркет',
-			'Хранение база',
-			'Хранение литр',
-			'Коэф хранения',
-			'Дата',
-			'Тариф до',
-		];
-
-		const rows = sorted.map((w) => [
-			w.warehouseName,
-			w.geoName,
-			w.boxDeliveryBase,
-			w.boxDeliveryLiter,
-			w.boxDeliveryCoefExpr,
-			w.boxDeliveryMarketplaceBase,
-			w.boxDeliveryMarketplaceLiter,
-			w.boxDeliveryMarketplaceCoefExpr,
-			w.boxStorageBase,
-			w.boxStorageLiter,
-			w.boxStorageCoefExpr,
-			date,
-			boxTarrif.dtTillMax,
-		]);
+	public async syncSpreadsheetsWithData(boxTariff: BoxTariffType, date: string): Promise<void> {
+		const { headers, rows } = boxTariffToSheetData(boxTariff, date, this.config.sheetHeaders);
 
 		const limit = pLimit(this.config.parallelLimit);
 
