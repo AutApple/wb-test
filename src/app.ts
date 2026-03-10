@@ -17,7 +17,7 @@ export class WbTestApplication {
 	constructor() {}
 
 	public async run() {
-		const tariffUpdateJob = new TarrifsSequentialUpdateJob();
+		const tariffUpdateJob = new TarrifsSequentialUpdateJob(appConfiguration);
 		await tariffUpdateJob.init();
 		this.tariffUpdateScheduler.start(tariffUpdateJob, appConfiguration.intervalMin * 60 * 1000);
 	}

@@ -1,4 +1,4 @@
-import { appConfiguration } from '../../config/app.config.js';
+import type { WBTestConfiguration } from '../../config/app.config.js';
 import db from '../../db/db.js';
 import { BaseJob } from '../../scheduler/base.job.js';
 import { getToday } from '../../utils/date.utils.js';
@@ -17,18 +17,19 @@ export class TarrifsSequentialUpdateJob extends BaseJob {
 	private tarrifsApiService: BoxTariffsApiService;
 	private tarrifsSheetsService: BoxTariffsSheetsService;
 
-	constructor() {
+	constructor(private appConfig: WBTestConfiguration) {
 		super();
 		this.tarrifsApiService = new BoxTariffsApiService();
 		this.tarrifsDbService = new BoxTariffsDatabaseService(db);
 		this.tarrifsSheetsService = new BoxTariffsSheetsService(this.tarrifsDbService, {
-			parallelLimit: appConfiguration.parallelChunkSizeLimit,
-			tabName: appConfiguration.tabName,
+			parallelLimit: appConfig.parallelChunkSizeLimit,
+			tabName: appConfig.tabName,
+			sheetHeaders: appConfig.defaultSheetHeaders,
 		});
 	}
 
 	public async init() {
-		await this.tarrifsSheetsService.initializeSpreadsheets(appConfiguration.sheetIds);
+		await this.tarrifsSheetsService.initializeSpreadsheets(this.appConfig.sheetIds);
 	}
 
 	public async execute(): Promise<void> {
